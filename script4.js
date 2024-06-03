@@ -12,8 +12,8 @@ window.addEventListener('load', function() {
     ctx.strokeStyle = 'green';
     ctx.fillStyle = 'lightblue';
     ctx.shadowColor = 'black';
-    ctx.shadowBlur = 10
-    ctx.shadowOffsetX = 5;
+    ctx.shadowBlur = 5;
+    ctx.shadowOffsetX = 30;
     ctx.shadowOffsetY = 10;
 
     const canvas2 = document.getElementById('canvas2');
@@ -29,10 +29,10 @@ window.addEventListener('load', function() {
             this.canvasWidth = canvasWidth;
             this.canvasHeight = canvasHeight;
             this.size = this.canvasWidth * 0.25;
-            this.sides = 6;
-            this.maxLevel = 5;
+            this.sides = 5;
+            this.maxLevel = 3;
             this.scale = 0.5;
-            this.spread = Math.random() * 2.8 + 0.1;
+            this.spread = Math.random() * 0.5 - 0.9
             this.branches = 2;
             this.color = 'hsl(' + Math.random() * 360 + ', 100%, 50%)';   // hue, saturation, lightness
         }
@@ -47,50 +47,45 @@ window.addEventListener('load', function() {
             context.scale(1, 1);
             context.rotate(0)
             for (let i = 0; i < this.sides; i++){
-                this.#drawLine(context, 0);
+                this.#drawCircle(context, 0);
                 context.rotate((Math.PI * 2)/this.sides);
             }
             context.restore();
         }
 
-        #drawLine(context, level) { // private method
+        #drawCircle(context, level) { // private method
 
             if (level > this.maxLevel) return;
+
+            // draw a circle instead of a line
             context.beginPath();
-            context.moveTo(0, 0);
-            context.lineTo(this.size, 0);
+            context.arc(0, 0, this.size, 0, Math.PI * 2);
             context.stroke();
 
-            // to draw some circles
             //context.beginPath();
-            //context.arc(this.size * 1.5, 0, 50, 0, Math.PI * 2);
-            ////context.stroke();
-            ////context.fill();
-            context.strokeRect(this.size * 1.2, 0, 30, 150);
+            //context.moveTo(0, 0);
+            //context.lineTo(this.size, 0);
+            //context.stroke();
 
-            //context.save(); // to get different shapes uncomment this, if you want to keep one shape, then keep this commented.
-
+            // to draw some circles
+            context.beginPath();
+            context.arc(this.size * 1.5, 0, 50, 0, Math.PI * 2);
+            context.fill();
+            
             for (let i = 0; i < this.branches; i++) {
                 context.save(); // to get one shape keep this uncommented, for different shapes, comment this.
                 
                 // the + and - in the translate method is to give space between the branches (- will look the shape as whole, while + will make the shape display the branches separately)
-                context.translate(this.size + (this.size/this.branches) * i, 0); 
+                context.translate(this.size - (this.size/this.branches) * i, 0); 
                 context.scale(this.scale, this.scale);
-    
+
                 context.save();
                 context.rotate(this.spread);
-                this.#drawLine(context, level + 1);
+                this.#drawCircle(context, level + 1);
                 context.restore();
-    
-                //context.save();
-                //context.rotate(-this.spread);
-                //this.#drawLine(context, level + 1);
-                //context.restore();
 
                 context.restore();  // to get one shape keep this uncommented, for different shapes, comment this.
             }
-
-            //context.restore();  // to get different shapes uncomment this, if you want to keep one shape, then keep this commented.
         }
     }
 
@@ -105,8 +100,8 @@ window.addEventListener('load', function() {
             this.sizeModifier = Math.random() * 0.2 + 0.1;
             this.width = this.image.width * this.sizeModifier;
             this.height = this.image.height * this.sizeModifier;
-            this.speed = Math.random() * 1 + 0.5;
-            this.angle = 0;
+            this.speed = Math.random() * 1 + 0.9;
+            this.angle = 1;
             this.va = Math.random() * 0.01 - 0.005;
         }       
 

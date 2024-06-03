@@ -12,7 +12,7 @@ window.addEventListener('load', function() {
     ctx.strokeStyle = 'green';
     ctx.fillStyle = 'lightblue';
     ctx.shadowColor = 'black';
-    ctx.shadowBlur = 10
+    ctx.shadowBlur = 5
     ctx.shadowOffsetX = 5;
     ctx.shadowOffsetY = 10;
 
@@ -62,14 +62,10 @@ window.addEventListener('load', function() {
             context.stroke();
 
             // to draw some circles
-            //context.beginPath();
-            //context.arc(this.size * 1.5, 0, 50, 0, Math.PI * 2);
-            ////context.stroke();
-            ////context.fill();
-            context.strokeRect(this.size * 1.2, 0, 30, 150);
-
-            //context.save(); // to get different shapes uncomment this, if you want to keep one shape, then keep this commented.
-
+            context.beginPath();
+            context.arc(this.size * 1.5, 0, 50, 0, Math.PI * 2);
+            context.stroke();
+            
             for (let i = 0; i < this.branches; i++) {
                 context.save(); // to get one shape keep this uncommented, for different shapes, comment this.
                 
@@ -82,15 +78,13 @@ window.addEventListener('load', function() {
                 this.#drawLine(context, level + 1);
                 context.restore();
     
-                //context.save();
-                //context.rotate(-this.spread);
-                //this.#drawLine(context, level + 1);
-                //context.restore();
+                context.save();
+                context.rotate(-this.spread);
+                this.#drawLine(context, level + 1);
+                context.restore();
 
                 context.restore();  // to get one shape keep this uncommented, for different shapes, comment this.
             }
-
-            //context.restore();  // to get different shapes uncomment this, if you want to keep one shape, then keep this commented.
         }
     }
 
